@@ -1,0 +1,482 @@
+@import "tailwindcss";
+
+/* next-themes writes class="dark"/"light" on <html>, so drive the dark variant
+   off the class rather than prefers-color-scheme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ───────────────────────────── Light theme (base) ─────────────────────────── */
+:root {
+  color-scheme: light;
+
+  --bg: #eef0f6;
+  --bg-deep: #e4e7ef;
+  --bg-elevated: #ffffff;
+
+  --fg: #0c1020;
+  --fg-muted: #4b5468;
+  --fg-subtle: #737c92;
+
+  --accent: #2f5fe0;
+  --accent-2: #7c3aed;
+  --accent-3: #0e9488;
+  --accent-fg: #ffffff;
+
+  --border: rgba(12, 16, 32, 0.1);
+  --border-strong: rgba(12, 16, 32, 0.16);
+
+  /* Glass — light mode needs a denser fill or panels wash out on a bright ground */
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-bg-strong: rgba(255, 255, 255, 0.76);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.42);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --glass-edge-top: rgba(255, 255, 255, 0.95);
+  --glass-edge-bottom: rgba(12, 16, 32, 0.06);
+  --glass-sheen: rgba(255, 255, 255, 0.55);
+  --glass-drop: 0 8px 32px rgba(12, 16, 32, 0.1);
+  --glass-drop-lg: 0 24px 64px rgba(12, 16, 32, 0.14);
+  --glass-blur: 32px;
+  --glass-saturation: 165%;
+  --glass-fallback: rgba(255, 255, 255, 0.94);
+
+  --grid-line: rgba(12, 16, 32, 0.055);
+  --glow-1: rgba(47, 95, 224, 0.22);
+  --glow-2: rgba(124, 58, 237, 0.18);
+  --glow-3: rgba(14, 148, 136, 0.16);
+  --noise-opacity: 0.03;
+}
+
+/* ───────────────────────────── Dark theme ─────────────────────────────────── */
+.dark {
+  color-scheme: dark;
+
+  --bg: #05070f;
+  --bg-deep: #02040a;
+  --bg-elevated: #0a0e1c;
+
+  --fg: #e9edf7;
+  --fg-muted: #99a3bb;
+  --fg-subtle: #6b7590;
+
+  --accent: #5b8cff;
+  --accent-2: #a575ff;
+  --accent-3: #38e0cf;
+  --accent-fg: #05070f;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* Glass — dark mode wants a thinner fill and a brighter specular edge */
+  --glass-bg: rgba(255, 255, 255, 0.045);
+  --glass-bg-strong: rgba(255, 255, 255, 0.075);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.028);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-edge-top: rgba(255, 255, 255, 0.42);
+  --glass-edge-bottom: rgba(0, 0, 0, 0.4);
+  --glass-sheen: rgba(255, 255, 255, 0.14);
+  --glass-drop: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --glass-drop-lg: 0 24px 64px rgba(0, 0, 0, 0.6);
+  --glass-blur: 40px;
+  --glass-saturation: 180%;
+  --glass-fallback: rgba(16, 20, 34, 0.94);
+
+  --grid-line: rgba(255, 255, 255, 0.045);
+  --glow-1: rgba(91, 140, 255, 0.3);
+  --glow-2: rgba(165, 117, 255, 0.24);
+  --glow-3: rgba(56, 224, 207, 0.2);
+  --noise-opacity: 0.045;
+}
+
+/* Cheaper blur on small screens — mobile GPUs pay for large radii. */
+@media (max-width: 767px) {
+  :root,
+  .dark {
+    --glass-blur: 14px;
+    --glass-saturation: 140%;
+  }
+}
+
+/* ───────────────────────────── Tailwind token bridge ─────────────────────── */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-deep: var(--bg-deep);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+  --color-accent-fg: var(--accent-fg);
+  --color-edge: var(--border);
+  --color-edge-strong: var(--border-strong);
+
+  --font-display:
+    var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --radius-glass: 1.25rem;
+  --radius-glass-lg: 1.75rem;
+
+  --animate-float: float 9s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.6s linear infinite;
+  --animate-pan: pan 18s ease-in-out infinite alternate;
+  --animate-rise: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@keyframes pan {
+  0% {
+    transform: translate3d(-3%, -2%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(3%, 2%, 0) scale(1.12);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ───────────────────────────── Base ──────────────────────────────────────── */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--accent) 32%, transparent);
+    color: var(--fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--fg-subtle) 35%, transparent);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklab, var(--fg-subtle) 55%, transparent);
+    background-clip: content-box;
+  }
+}
+
+/* ───────────────────────────── Glass recipes ────────────────────────────────
+   Three tiers by prominence. Never put backdrop-filter on an element that is
+   also transformed every scroll frame — that combination is the jank source. */
+@layer components {
+  .glass-1,
+  .glass-2,
+  .glass-3 {
+    position: relative;
+    -webkit-backdrop-filter: blur(var(--glass-blur))
+      saturate(var(--glass-saturation));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+    border: 1px solid var(--glass-border);
+    transition:
+      background-color 0.4s ease,
+      border-color 0.4s ease,
+      box-shadow 0.4s ease,
+      /* Tailwind v4's translate-* utilities write the `translate` property,
+         not `transform` — ease both so a hover lift never snaps. */
+        translate 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Tier 1 — chips, pills, small controls */
+  .glass-1 {
+    background-color: var(--glass-bg-subtle);
+    border-radius: 999px;
+    box-shadow:
+      inset 0 1px 0 0 var(--glass-edge-top),
+      0 2px 10px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Tier 2 — cards, panels, the workhorse */
+  .glass-2 {
+    background-color: var(--glass-bg);
+    border-radius: var(--radius-glass);
+    box-shadow:
+      inset 0 1px 0 0 var(--glass-edge-top),
+      inset 0 -1px 0 0 var(--glass-edge-bottom),
+      var(--glass-drop);
+  }
+
+  /* Tier 3 — nav, hero CTA, contact panel */
+  .glass-3 {
+    background-color: var(--glass-bg-strong);
+    border-radius: var(--radius-glass-lg);
+    box-shadow:
+      inset 0 1px 0 0 var(--glass-edge-top),
+      inset 0 -1px 0 0 var(--glass-edge-bottom),
+      inset 1px 0 0 0
+        color-mix(in oklab, var(--glass-edge-top) 50%, transparent),
+      var(--glass-drop-lg);
+  }
+
+  .glass-hover:hover {
+    background-color: var(--glass-bg-strong);
+    border-color: var(--border-strong);
+    box-shadow:
+      inset 0 1px 0 0 var(--glass-edge-top),
+      inset 0 -1px 0 0 var(--glass-edge-bottom),
+      var(--glass-drop-lg);
+  }
+
+  /* Cursor-tracked specular glint. --mx/--my are set on pointermove by
+     useSpecular(), writing CSS vars directly so React never re-renders. */
+  .glass-sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 0%),
+      var(--glass-sheen),
+      transparent 65%
+    );
+  }
+  .glass-sheen:hover::after {
+    opacity: 1;
+  }
+
+  /* Top-edge light catch, the detail that reads as "glass" rather than "blur" */
+  .glass-edge::before {
+    content: "";
+    position: absolute;
+    inset-inline: 12%;
+    top: 0;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--glass-edge-top),
+      transparent
+    );
+  }
+
+  /* Tier 1 refraction: a blurred layer carrying an SVG displacement map, so the
+     background actually bends at the edges. Desktop + pointer only — it is not
+     reliably GPU-composited and is expensive to keep live. */
+  .glass-refract > .refract-layer {
+    display: none;
+  }
+  @media (min-width: 1024px) and (hover: hover) {
+    .glass-refract > .refract-layer {
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
+      filter: url(#liquid-glass-refract);
+      opacity: 0.55;
+    }
+  }
+
+  .text-gradient {
+    /* Stops span the element exactly, so the accent tri-tone is actually
+       visible — an oversized background just parks --fg in the viewport. */
+    background: linear-gradient(
+      104deg,
+      var(--accent) 0%,
+      var(--accent-2) 48%,
+      var(--accent-3) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Fallback for engines that ignore background-clip: text */
+    @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+      background: none;
+      color: var(--accent);
+    }
+  }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--border-strong),
+      transparent
+    );
+  }
+
+  /* Ambient page furniture */
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 72px 72px;
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      #000 40%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      #000 40%,
+      transparent 100%
+    );
+  }
+
+  .noise {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--noise-opacity);
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  .section-shell {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .section-shell {
+      padding-inline: 2rem;
+    }
+  }
+
+  .scroll-anchor {
+    scroll-margin-top: 6.5rem;
+  }
+
+  /* Keyboard-only escape hatch past the fixed nav. Off-screen until focused,
+     rather than display:none, so screen readers still announce it. */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 50%;
+    z-index: 100;
+    translate: -50% -180%;
+    padding: 0.7rem 1.25rem;
+    border-radius: 999px;
+    background-color: var(--bg-elevated);
+    color: var(--fg);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--glass-drop-lg);
+    font-size: 0.875rem;
+    transition: translate 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .skip-link:focus-visible {
+    translate: -50% 0;
+  }
+
+  /* Wide content (tables, code, chip rails) scrolls inside itself, never the page. */
+  .scroll-x {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+}
+
+/* ───────────────────────────── Fallbacks & a11y ──────────────────────────── */
+
+/* No backdrop-filter (older Firefox, some Android WebViews): solid panels. */
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .glass-1,
+  .glass-2,
+  .glass-3 {
+    background-color: var(--glass-fallback);
+  }
+  .glass-refract > .refract-layer {
+    display: none;
+  }
+}
+
+/* Hard gate, not a suggestion — WCAG 2.3.3. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .glass-sheen::after {
+    display: none;
+  }
+}

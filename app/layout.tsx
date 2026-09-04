@@ -12,6 +12,7 @@ import { SceneBackdrop } from "@/components/three/scene-backdrop";
 import { GlassFilterDefs } from "@/components/ui/glass-panel";
 import { profile } from "@/data/profile";
 import { links } from "@/data/links";
+import { siteUrl } from "@/lib/site-url";
 
 const display = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -30,10 +31,6 @@ const mono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
 });
-
-/** Override with NEXT_PUBLIC_SITE_URL once a custom domain is attached. */
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://kamal-seriki.vercel.app";
 
 const description =
   "Senior AI Engineer & Backend Architect with 5+ years building fraud detection, recommender systems and distributed backends across fintech, healthcare and creator platforms. Python, Django, FastAPI, .NET and Solidity.";

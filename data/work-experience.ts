@@ -10,7 +10,7 @@ export const workExperience: WorkExperience[] = [
     company: "Izifin Technologies",
     role: "Mid-Senior Backend Developer",
     startDate: "2025-10",
-    endDate: "2026-09",
+    endDate: "2026-08",
     location: "Hybrid · Lagos",
     summary:
       "Izifin engineers high-performance fintech solutions and intelligent backend server networks.",
@@ -31,9 +31,19 @@ export const workExperience: WorkExperience[] = [
           "Designed high-throughput C#/.NET Core APIs powering external integrations and rapid delivery of mission-critical platform features.",
       },
       {
-        label: "Database & observability engineering",
+        label: "Cloud infrastructure & DevOps",
         detail:
-          "Tuned SQL Server and PostgreSQL through query optimisation and architectural migrations, and implemented an observability framework that cut alert fatigue with precise metric thresholds.",
+          "Owned mission-critical cloud environments and automated CI/CD pipelines to improve release velocity and keep availability high for global end users.",
+      },
+      {
+        label: "Database optimisation & engineering",
+        detail:
+          "Tuned SQL Server and PostgreSQL through advanced query optimisation and architectural migrations, cutting latency and lifting system scalability.",
+      },
+      {
+        label: "Observability & transaction monitoring",
+        detail:
+          "Implemented an observability framework and transaction pipeline that cut alert fatigue with precise metric thresholds, enabling proactive resolution of system issues.",
       },
     ],
     stack: [

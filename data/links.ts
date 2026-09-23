@@ -25,7 +25,7 @@ export const resume = {
   href: "/Kamaldeen-Seriki-Resume.pdf",
   filename: "Kamaldeen-Seriki-Resume.pdf",
   /** Shown next to the download control so the weight is not a surprise. */
-  sizeLabel: "126 KB",
+  sizeLabel: "349 KB",
 } as const;
 
 /** Section anchors, shared by the nav and the scroll choreography. */

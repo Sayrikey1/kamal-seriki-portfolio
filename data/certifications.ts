@@ -22,6 +22,13 @@ export const certifications: Certification[] = [
     detail:
       "Placed third building machine translation models for Yoruba, a low-resource language.",
   },
+  {
+    title: "Notable projects",
+    issuer: "Selected work",
+    kind: "award",
+    detail:
+      "Staffing prediction models, viral content recommenders, fraud detection at a 98% F1-score, and motion detection systems.",
+  },
 ];
 
 export const communityRoles: CommunityRole[] = [
